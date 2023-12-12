@@ -1,0 +1,26 @@
+#include <Stepper.h>
+
+#define IN1 27
+#define IN2 14
+#define IN3 12
+#define IN4 13
+
+
+int steps_per_rev = 2048;
+
+Stepper motor(steps_per_rev, IN1, IN3, IN2, IN4);
+
+void setup() {
+  Serial.begin(115200);
+  motor.setSpeed(16);
+}
+
+void moverMotor(int grados_por_giro, int giros){
+  int pasos = grados_por_giro * steps_per_rev / 360 * giros;
+  motor.step(pasos);
+}
+
+void loop(){
+  moverMotor(360,2);
+}
+
