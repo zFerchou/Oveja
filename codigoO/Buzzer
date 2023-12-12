@@ -1,0 +1,87 @@
+#include "pitches.h"
+
+
+const int buzzerPin = 27; // Pin donde está conectado el buzzer
+const int ultrasonicTriggerPin = 10; // Pin del trigger del sensor ultrasónico
+const int ultrasonicEchoPin = 11; // Pin del echo del sensor ultrasónico
+
+bool isPlayingSong1 = false;
+bool isPlayingSong2 = false;
+
+int jingleBellsMelody[] = {
+  // Notas de Jingle Bells van aquí
+  NOTE_E4, NOTE_E4, NOTE_E4,
+  NOTE_E4, NOTE_E4, NOTE_E4,
+  NOTE_E4, NOTE_G4, NOTE_C4, NOTE_D4,
+  NOTE_E4,
+  NOTE_F4, NOTE_F4, NOTE_F4, NOTE_F4,
+  NOTE_F4, NOTE_E4, NOTE_E4, NOTE_E4, NOTE_E4,
+  NOTE_E4, NOTE_D4, NOTE_D4, NOTE_E4,
+  NOTE_D4, NOTE_G4,
+};
+
+int otherMelody[] = {
+  // Notas de la otra canción van aquí
+  NOTE_C4, NOTE_D4, NOTE_E4,
+  NOTE_F4, NOTE_G4, NOTE_A4,
+  NOTE_B4, NOTE_C5
+};
+
+int jingleBellsNoteDurations[] = {
+  // Duraciones de Jingle Bells van aquí
+  100, 100, 200,
+  100, 100, 200,
+  100, 100, 100, 300,
+  100,
+  100, 100, 100, 100,
+  100, 100, 100, 100,
+  100, 100, 100, 200,
+  100, 300
+};
+
+int otherNoteDurations[] = {
+  // Duraciones de la otra canción van aquí
+  100, 100, 100,
+  100, 100, 100,
+  100, 200
+};
+
+void setup() {
+  pinMode(buzzerPin, OUTPUT);
+  pinMode(ultrasonicTriggerPin, OUTPUT);
+  pinMode(ultrasonicEchoPin, INPUT);
+}
+
+void loop() {
+  // Detectar objetos cercanos con el sensor ultrasónico
+  digitalWrite(ultrasonicTriggerPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(ultrasonicTriggerPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(ultrasonicTriggerPin, LOW);
+
+  int duration = pulseIn(ultrasonicEchoPin, HIGH);
+  int distance = duration * 0.034 / 2;
+
+  if (distance < 10 && !isPlayingSong1 && !isPlayingSong2) {
+    isPlayingSong1 = true;
+    playSong(jingleBellsMelody, jingleBellsNoteDurations, sizeof(jingleBellsMelody) / sizeof(jingleBellsMelody[0]));
+    isPlayingSong1 = false;
+  } else if (distance >= 10) {
+    // Puedes agregar aquí la lógica para detener la canción si es necesario
+  }
+}
+
+void playSong(int melody[], int noteDurations[], int length) {
+  for (int i = 0; i < length; i++) {
+    if (melody[i] != 0) {
+      tone(buzzerPin, melody[i], noteDurations[i]);
+      delay(noteDurations[i]); // Espera entre notas
+    } else {
+      delay(noteDurations[i]); // Espera si la nota es cero
+    }
+    noTone(buzzerPin);
+    delay(50); // Breve pausa entre notas
+  }
+}
+
