@@ -27,8 +27,7 @@ https://github.com/zFerchou/Oveja/assets/148410334/65106872-8ec7-4aeb-ba4a-d40d3
 la comunicacion con el dispositivo se realizo mediante una conexion web en una aplicacion, con esta misma se le daban las ordenes a la ESP32
 y con esta misma relizaba las acciones
 
-## Arquitectura
-Materiales:
+## Arquitectura/Materiales:
 ![algodon](https://github.com/zFerchou/Oveja/assets/148410334/c7effe28-7065-487a-8f54-395631b31a85)
 ![ESP32](https://github.com/zFerchou/Oveja/assets/148410334/15f3e710-0d60-4e60-88bf-e81be0472da2)
 ![buzzer](https://github.com/zFerchou/Oveja/assets/148410334/cd08185b-b01e-4bfa-872e-266f6de66149)
